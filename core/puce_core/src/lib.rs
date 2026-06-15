@@ -110,11 +110,17 @@ pub extern "C" fn puce_init() -> c_int {
         let mapping = MappingEngine::new()
             .context("mapping engine init")?;
 
-        let emulation = EmulationEngine::new(PSMode::DualSense)
-            .context("emulation engine init")?;
+        // EmulationEngine::new() returns Self directly (not Result)
+        let emulation = EmulationEngine::new(PSMode::DualSense);
 
-        let plugins = PluginManager::new()
-            .context("plugin manager init")?;
+        // PluginManager::new() returns Self directly — takes (plugins_dir, require_signatures)
+        let plugins_dir = std::env::var("PUCE_PLUGINS_DIR")
+            .map(std::path::PathBuf::from)
+            .unwrap_or_else(|_| std::path::PathBuf::from("plugins"));
+        let require_sig = std::env::var("PUCE_REQUIRE_SIGNED_PLUGINS")
+            .map(|v| v != "0")
+            .unwrap_or(true);
+        let plugins = PluginManager::new(plugins_dir, require_sig);
 
         Ok(PuceState {
             detection,
@@ -323,7 +329,8 @@ pub extern "C" fn puce_get_status() -> *const c_char {
         Some(state) => {
             let devices = state.detection.get_devices();
             let plugins = state.plugins.list();
-            let mode    = state.emulation.current_mode_name();
+            // PSMode exposes display_name() directly on the enum
+            let mode    = state.emulation.mode().display_name();
 
             let status = json!({
                 "version":        PUCE_VERSION,
@@ -394,7 +401,11 @@ pub extern "C" fn puce_load_plugin(path: *const c_char) -> c_int {
     match guard.as_mut() {
         None => { error!("puce_load_plugin: not initialised"); -1 }
         Some(state) => match state.plugins.load(&path_str) {
-            Ok(()) => 0,
+            // load() returns Result<PluginInfo, PluginError> — we only care about success/failure
+            Ok(info) => {
+                info!("puce_load_plugin: loaded plugin '{}' v{}", info.name, info.version);
+                0
+            }
             Err(e) => { error!("puce_load_plugin: {e:#}"); -1 }
         }
     }
