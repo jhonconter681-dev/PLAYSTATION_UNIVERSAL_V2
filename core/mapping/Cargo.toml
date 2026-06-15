@@ -1,0 +1,20 @@
+[package]
+name = "mapping"
+version = "0.1.0"
+edition = "2021"
+authors = ["PUCE Contributors"]
+description = "Button / axis mapping engine for PUCE"
+license = "MIT"
+
+[lib]
+name = "mapping"
+crate-type = ["rlib"]
+
+[dependencies]
+detection   = { path = "../detection" }
+serde       = { workspace = true }
+serde_json  = { workspace = true }
+log         = { workspace = true }
+anyhow      = { workspace = true }
+thiserror   = { workspace = true }
+uuid        = { workspace = true }

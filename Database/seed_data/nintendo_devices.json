@@ -1,0 +1,290 @@
+{
+  "metadata": {
+    "schema_version": "1.0",
+    "description": "Nintendo controller device database for PUCE",
+    "vendor_id_primary": "0x057E",
+    "vendor_name": "Nintendo Co., Ltd.",
+    "generated_at": "2026-06-15T00:00:00Z"
+  },
+  "devices": [
+    {
+      "vid": "0x057E",
+      "pid": "0x2009",
+      "name": "Nintendo Switch Pro Controller",
+      "short_name": "Switch Pro",
+      "manufacturer": "Nintendo",
+      "device_type": "gamepad",
+      "release_year": 2017,
+      "interface": ["USB", "Bluetooth"],
+      "button_count": 18,
+      "axis_count": 4,
+      "sensors": [
+        {"type": "accelerometer", "axes": 3, "range": "+-8g",       "resolution": "16bit"},
+        {"type": "gyroscope",     "axes": 3, "range": "+-2000deg/s","resolution": "16bit"}
+      ],
+      "capabilities": {
+        "rumble": true,
+        "rumble_type": "HD Rumble",
+        "leds": true,
+        "led_type": "player_leds",
+        "led_count": 4,
+        "touchpad": false,
+        "gyroscope": true,
+        "accelerometer": true,
+        "audio": false,
+        "usb_charging": true,
+        "usb_type": "USB-C",
+        "bluetooth_pairing": true,
+        "nfc": true
+      },
+      "buttons": [
+        "A", "B", "X", "Y",
+        "L", "R", "ZL", "ZR",
+        "Left Stick Click", "Right Stick Click",
+        "Plus", "Minus", "Home", "Capture",
+        "D-Pad Up", "D-Pad Down", "D-Pad Left", "D-Pad Right"
+      ],
+      "axes": ["Left X", "Left Y", "Right X", "Right Y"],
+      "rumble_motors": ["hd_left", "hd_right"],
+      "usb_version": "2.0",
+      "bt_version": "3.0",
+      "notes": "Full-featured Pro Controller for Nintendo Switch. HD Rumble, gyro, NFC (for Amiibo)."
+    },
+    {
+      "vid": "0x057E",
+      "pid": "0x2006",
+      "name": "Joy-Con (L)",
+      "short_name": "Joy-Con Left",
+      "manufacturer": "Nintendo",
+      "device_type": "gamepad",
+      "release_year": 2017,
+      "interface": ["Bluetooth"],
+      "button_count": 10,
+      "axis_count": 2,
+      "sensors": [
+        {"type": "accelerometer", "axes": 3, "range": "+-8g",       "resolution": "16bit"},
+        {"type": "gyroscope",     "axes": 3, "range": "+-2000deg/s","resolution": "16bit"},
+        {"type": "ir_camera",     "pixels": "320x240"}
+      ],
+      "capabilities": {
+        "rumble": true,
+        "rumble_type": "HD Rumble",
+        "leds": true,
+        "led_type": "player_leds",
+        "led_count": 4,
+        "touchpad": false,
+        "gyroscope": true,
+        "accelerometer": true,
+        "ir_camera": false,
+        "audio": false,
+        "bluetooth_pairing": true,
+        "rail_connector": true,
+        "can_pair_with_right_joycon": true
+      },
+      "buttons": [
+        "Left Stick Click",
+        "Up", "Down", "Left", "Right",
+        "L", "ZL",
+        "Minus", "Capture",
+        "SL", "SR"
+      ],
+      "axes": ["Left X", "Left Y"],
+      "rumble_motors": ["hd_left"],
+      "bt_version": "3.0",
+      "notes": "Left Joy-Con. Has D-pad, stick, L/ZL. Can be held sideways as standalone controller."
+    },
+    {
+      "vid": "0x057E",
+      "pid": "0x2007",
+      "name": "Joy-Con (R)",
+      "short_name": "Joy-Con Right",
+      "manufacturer": "Nintendo",
+      "device_type": "gamepad",
+      "release_year": 2017,
+      "interface": ["Bluetooth"],
+      "button_count": 10,
+      "axis_count": 2,
+      "sensors": [
+        {"type": "accelerometer", "axes": 3, "range": "+-8g",       "resolution": "16bit"},
+        {"type": "gyroscope",     "axes": 3, "range": "+-2000deg/s","resolution": "16bit"},
+        {"type": "ir_camera",     "pixels": "320x240"}
+      ],
+      "capabilities": {
+        "rumble": true,
+        "rumble_type": "HD Rumble",
+        "leds": true,
+        "led_type": "player_leds",
+        "led_count": 4,
+        "touchpad": false,
+        "gyroscope": true,
+        "accelerometer": true,
+        "ir_camera": true,
+        "audio": false,
+        "bluetooth_pairing": true,
+        "rail_connector": true,
+        "nfc": true,
+        "can_pair_with_left_joycon": true
+      },
+      "buttons": [
+        "Right Stick Click",
+        "A", "B", "X", "Y",
+        "R", "ZR",
+        "Plus", "Home",
+        "SL", "SR"
+      ],
+      "axes": ["Right X", "Right Y"],
+      "rumble_motors": ["hd_right"],
+      "bt_version": "3.0",
+      "notes": "Right Joy-Con. Has face buttons, NFC (Amiibo), IR camera."
+    },
+    {
+      "vid": "0x057E",
+      "pid": "0x200E",
+      "name": "Joy-Con Charging Grip",
+      "short_name": "Joy-Con Grip",
+      "manufacturer": "Nintendo",
+      "device_type": "adapter",
+      "release_year": 2017,
+      "interface": ["USB"],
+      "button_count": 0,
+      "axis_count": 0,
+      "sensors": [],
+      "capabilities": {
+        "passthrough": true,
+        "charging": true,
+        "usb_charging": true,
+        "usb_type": "USB-C"
+      },
+      "buttons": [],
+      "axes": [],
+      "usb_version": "2.0",
+      "notes": "Grip accessory holding both Joy-Cons. Provides USB charging and creates a traditional controller feel."
+    },
+    {
+      "vid": "0x057E",
+      "pid": "0x2017",
+      "name": "NES Controller (NSO)",
+      "short_name": "NES NSO",
+      "manufacturer": "Nintendo",
+      "device_type": "gamepad",
+      "release_year": 2019,
+      "interface": ["Bluetooth"],
+      "button_count": 8,
+      "axis_count": 0,
+      "sensors": [],
+      "capabilities": {
+        "rumble": false,
+        "leds": false,
+        "gyroscope": false,
+        "accelerometer": false,
+        "bluetooth_pairing": true,
+        "nso_exclusive": true
+      },
+      "buttons": [
+        "A", "B", "Select", "Start",
+        "D-Pad Up", "D-Pad Down", "D-Pad Left", "D-Pad Right"
+      ],
+      "axes": [],
+      "bt_version": "3.0",
+      "notes": "Nintendo Switch Online NES replica controller. Only works with Switch. Digital only."
+    },
+    {
+      "vid": "0x057E",
+      "pid": "0x2019",
+      "name": "N64 Controller (NSO)",
+      "short_name": "N64 NSO",
+      "manufacturer": "Nintendo",
+      "device_type": "gamepad",
+      "release_year": 2021,
+      "interface": ["Bluetooth"],
+      "button_count": 14,
+      "axis_count": 2,
+      "sensors": [],
+      "capabilities": {
+        "rumble": true,
+        "rumble_type": "HD Rumble",
+        "leds": false,
+        "gyroscope": false,
+        "accelerometer": false,
+        "bluetooth_pairing": true,
+        "nso_exclusive": true
+      },
+      "buttons": [
+        "A", "B", "Z",
+        "L", "R",
+        "Start",
+        "C-Up", "C-Down", "C-Left", "C-Right",
+        "D-Pad Up", "D-Pad Down", "D-Pad Left", "D-Pad Right"
+      ],
+      "axes": ["Analog X", "Analog Y"],
+      "rumble_motors": ["hd"],
+      "bt_version": "3.0",
+      "notes": "Nintendo Switch Online N64 replica. Single analog stick, no second stick."
+    },
+    {
+      "vid": "0x057E",
+      "pid": "0x2007",
+      "name": "SNES Controller (NSO)",
+      "short_name": "SNES NSO",
+      "manufacturer": "Nintendo",
+      "device_type": "gamepad",
+      "release_year": 2019,
+      "interface": ["Bluetooth"],
+      "button_count": 12,
+      "axis_count": 0,
+      "sensors": [],
+      "capabilities": {
+        "rumble": false,
+        "leds": false,
+        "gyroscope": false,
+        "accelerometer": false,
+        "bluetooth_pairing": true,
+        "nso_exclusive": true
+      },
+      "buttons": [
+        "A", "B", "X", "Y",
+        "L", "R",
+        "Select", "Start",
+        "D-Pad Up", "D-Pad Down", "D-Pad Left", "D-Pad Right"
+      ],
+      "axes": [],
+      "bt_version": "3.0",
+      "notes": "Nintendo Switch Online SNES replica controller."
+    },
+    {
+      "vid": "0x057E",
+      "pid": "0x0337",
+      "name": "GameCube Controller Adapter",
+      "short_name": "GC Adapter",
+      "manufacturer": "Nintendo",
+      "device_type": "adapter",
+      "release_year": 2014,
+      "interface": ["USB"],
+      "button_count": 0,
+      "axis_count": 0,
+      "sensors": [],
+      "capabilities": {
+        "passthrough": true,
+        "ports": 4,
+        "usb_dual_plug": true
+      },
+      "buttons": [],
+      "axes": [],
+      "usb_version": "2.0",
+      "notes": "4-port GameCube controller USB adapter. Uses dual USB plugs. Supports 4 GC controllers simultaneously.",
+      "child_device": {
+        "name": "GameCube Controller",
+        "button_count": 12,
+        "axis_count": 5,
+        "buttons": [
+          "A", "B", "X", "Y", "Z",
+          "L Digital", "R Digital",
+          "Start",
+          "D-Pad Up", "D-Pad Down", "D-Pad Left", "D-Pad Right"
+        ],
+        "axes": ["Main X", "Main Y", "C-Stick X", "C-Stick Y", "L Analog", "R Analog"],
+        "rumble": true
+      }
+    }
+  ]
+}

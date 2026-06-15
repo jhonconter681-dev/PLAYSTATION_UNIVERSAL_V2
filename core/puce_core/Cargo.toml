@@ -1,0 +1,36 @@
+[package]
+name = "puce_core"
+version = "0.1.0"
+edition = "2021"
+authors = ["PUCE Contributors"]
+description = "PlayStation Universal Controller Emulator — core FFI library"
+license = "MIT"
+
+[lib]
+name = "puce_core"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# Sibling workspace crates
+detection      = { path = "../detection" }
+mapping        = { path = "../mapping" }
+emulation      = { path = "../emulation" }
+ai_engine      = { path = "../ai_engine" }
+virtual_controller = { path = "../virtual_controller" }
+plugin_system  = { path = "../plugin_system" }
+database       = { path = "../database" }
+security       = { path = "../security" }
+
+# Workspace-level dependencies
+serde       = { workspace = true }
+serde_json  = { workspace = true }
+tokio       = { workspace = true }
+log         = { workspace = true }
+env_logger  = { workspace = true }
+anyhow      = { workspace = true }
+thiserror   = { workspace = true }
+uuid        = { workspace = true }
+chrono      = { workspace = true }
+
+[build-dependencies]
+cbindgen = "0.26"

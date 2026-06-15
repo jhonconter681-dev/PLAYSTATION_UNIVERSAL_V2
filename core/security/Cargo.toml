@@ -1,0 +1,17 @@
+[package]
+name = "security"
+version = "0.1.0"
+edition = "2021"
+description = "Digital signing, OTA update verification, and integrity checking for PUCE"
+license = "MIT"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+ed25519-dalek = { workspace = true }
+sha2 = { workspace = true }
+hex = { workspace = true }
+rand = { workspace = true }

@@ -1,0 +1,13 @@
+[package]
+name = "ai_engine"
+version = "0.1.0"
+edition = "2021"
+description = "AI-powered calibration, drift correction, and profile suggestion for PUCE"
+license = "MIT"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }

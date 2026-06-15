@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "last_updated": "2026-06-15T00:00:00Z",
+  "devices": [
+    {
+      "vendor_id": 1356,
+      "product_id": 3302,
+      "name": "DualSense Wireless Controller",
+      "manufacturer": "Sony Interactive Entertainment",
+      "device_type": "PlayStation",
+      "button_count": 17,
+      "axis_count": 6,
+      "sensors": ["gyroscope", "accelerometer", "touchpad"],
+      "capabilities": ["haptics", "adaptive_triggers", "microphone", "speaker"]
+    },
+    {
+      "vendor_id": 1356,
+      "product_id": 2508,
+      "name": "DualShock 4 Wireless Controller",
+      "manufacturer": "Sony Interactive Entertainment",
+      "device_type": "PlayStation",
+      "button_count": 14,
+      "axis_count": 6,
+      "sensors": ["gyroscope", "accelerometer", "touchpad"],
+      "capabilities": ["vibration", "lightbar", "speaker"]
+    },
+    {
+      "vendor_id": 1118,
+      "product_id": 736,
+      "name": "Xbox 360 Controller",
+      "manufacturer": "Microsoft",
+      "device_type": "Xbox",
+      "button_count": 14,
+      "axis_count": 6,
+      "sensors": [],
+      "capabilities": ["vibration"]
+    },
+    {
+      "vendor_id": 1118,
+      "product_id": 2816,
+      "name": "Xbox Wireless Controller",
+      "manufacturer": "Microsoft",
+      "device_type": "Xbox",
+      "button_count": 15,
+      "axis_count": 6,
+      "sensors": [],
+      "capabilities": ["vibration", "impulse_triggers"]
+    },
+    {
+      "vendor_id": 1406,
+      "product_id": 8201,
+      "name": "Nintendo Switch Pro Controller",
+      "manufacturer": "Nintendo",
+      "device_type": "Nintendo",
+      "button_count": 18,
+      "axis_count": 4,
+      "sensors": ["gyroscope", "accelerometer"],
+      "capabilities": ["hd_rumble", "nfc"]
+    },
+    {
+      "vendor_id": 11464,
+      "product_id": 8201,
+      "name": "8BitDo Ultimate Controller",
+      "manufacturer": "8BitDo",
+      "device_type": "8BitDo",
+      "button_count": 16,
+      "axis_count": 6,
+      "sensors": ["gyroscope", "accelerometer"],
+      "capabilities": ["vibration"]
+    }
+  ]
+}

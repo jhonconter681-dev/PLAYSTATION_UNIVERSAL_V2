@@ -1,0 +1,202 @@
+name: Release Pipeline
+
+on:
+  push:
+    tags:
+      - 'v*'   # Runs on tags like v1.0.0, v1.2.3, etc.
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # ───────────────────────────────────────────────────────────────────────────
+  # 1. Build the Rust core library for all three platforms in parallel
+  # ───────────────────────────────────────────────────────────────────────────
+  build-rust-core:
+    name: "🦀 Rust Core (${{ matrix.os }})"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false   # Don't cancel Windows/macOS if Linux fails
+      matrix:
+        include:
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: puce_core.dll
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: libpuce_core.so
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: libpuce_core.dylib
+
+    steps:
+      # ── 1a. Checkout ────────────────────────────────────────────────────────
+      - name: "📥 Checkout"
+        uses: actions/checkout@v4
+
+      # ── 1b. Linux system libraries ──────────────────────────────────────────
+      # btleplug (Bluetooth) requires D-Bus and udev headers on Linux.
+      # hidapi requires libudev. openssl is needed by several crates.
+      - name: "📦 Install Linux system dependencies"
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            libdbus-1-dev \
+            pkg-config \
+            libudev-dev \
+            libssl-dev \
+            libusb-1.0-0-dev
+
+      # ── 1c. Rust toolchain ───────────────────────────────────────────────────
+      - name: "🔧 Install Rust (stable)"
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      # ── 1d. Cargo cache ──────────────────────────────────────────────────────
+      - name: "💾 Cache Cargo"
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+
+      # ── 1e. Build ────────────────────────────────────────────────────────────
+      - name: "🔨 cargo build --release"
+        run: cargo build --release --target ${{ matrix.target }}
+
+      # ── 1f. Upload artifact ──────────────────────────────────────────────────
+      - name: "⬆️ Upload core artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: core-${{ matrix.os }}
+          path: target/${{ matrix.target }}/release/${{ matrix.artifact_name }}
+          if-no-files-found: error
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # 2. Build Flutter UI for all three platforms
+  # ───────────────────────────────────────────────────────────────────────────
+  build-flutter-ui:
+    name: "🎨 Flutter UI (${{ matrix.platform }})"
+    needs: build-rust-core
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            platform: windows
+            artifact_path: build/windows/x64/runner/Release
+          - os: ubuntu-latest
+            platform: linux
+            artifact_path: build/linux/x64/release/bundle
+          - os: macos-latest
+            platform: macos
+            artifact_path: build/macos/Build/Products/Release
+
+    steps:
+      - name: "📥 Checkout"
+        uses: actions/checkout@v4
+
+      # Linux GTK3 required by Flutter desktop
+      - name: "📦 Install Linux UI dependencies"
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            libgtk-3-dev \
+            libblkid-dev \
+            liblzma-dev \
+            ninja-build \
+            cmake \
+            clang \
+            pkg-config \
+            libdbus-1-dev \
+            libudev-dev
+
+      - name: "🔧 Install Flutter (stable)"
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      # Download matching native library and place it next to the FFI bridge
+      - name: "⬇️ Download core artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: core-${{ matrix.os }}
+          path: UI/lib/ffi/
+
+      - name: "📦 Flutter pub get"
+        working-directory: UI
+        run: flutter pub get
+
+      - name: "🔨 Flutter build (${{ matrix.platform }})"
+        working-directory: UI
+        run: flutter build ${{ matrix.platform }} --release
+
+      - name: "⬆️ Upload UI artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: PUCE-${{ matrix.platform }}
+          path: UI/${{ matrix.artifact_path }}
+          if-no-files-found: warn
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # 3. Package everything into a GitHub Release with download links
+  # ───────────────────────────────────────────────────────────────────────────
+  create-release:
+    name: "🚀 Publish Release"
+    needs: build-flutter-ui
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: "📥 Checkout"
+        uses: actions/checkout@v4
+
+      - name: "⬇️ Download all platform artifacts"
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts/
+
+      - name: "🗜️ Zip platform bundles"
+        run: |
+          cd release-artifacts
+          for dir in PUCE-*/; do
+            platform="${dir%/}"
+            zip -r "${platform}.zip" "${dir}"
+            echo "✅ Packaged: ${platform}.zip"
+          done
+          ls -lh *.zip
+
+      - name: "📢 Publish GitHub Release"
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          name: "🎮 PUCE ${{ github.ref_name }} — PlayStation Universal Controller Emulator"
+          body: |
+            ## 🎮 PUCE — PlayStation Universal Controller Emulator
+            
+            Converts **any controller** (Xbox, Nintendo, keyboard, mouse, generic HID) into a
+            **real PlayStation controller signal** (PS1 → DualSense Edge).
+            
+            ### 📦 Downloads
+            
+            | Platform | File | Notes |
+            |----------|------|-------|
+            | 🪟 Windows | `PUCE-windows.zip` | Requires [ViGEmBus driver](https://github.com/ViGEm/ViGEmBus/releases) |
+            | 🐧 Linux | `PUCE-linux.zip` | Requires uinput kernel module (enabled by default) |
+            | 🍎 macOS | `PUCE-macos.zip` | Requires macOS 12+ |
+            
+            ### 🚀 Quick Start (Windows)
+            1. Install [ViGEmBus](https://github.com/ViGEm/ViGEmBus/releases/latest) if not already installed.
+            2. Download and extract `PUCE-windows.zip`.
+            3. Run `PUCE.exe`.
+            4. Connect your controller — PUCE auto-detects and maps it!
+          files: release-artifacts/PUCE-*.zip

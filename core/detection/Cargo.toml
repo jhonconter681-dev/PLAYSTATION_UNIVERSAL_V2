@@ -1,0 +1,23 @@
+[package]
+name = "detection"
+version = "0.1.0"
+edition = "2021"
+authors = ["PUCE Contributors"]
+description = "HID and Bluetooth device detection engine for PUCE"
+license = "MIT"
+
+[lib]
+name = "detection"
+crate-type = ["rlib"]
+
+[dependencies]
+serde       = { workspace = true }
+serde_json  = { workspace = true }
+tokio       = { workspace = true }
+log         = { workspace = true }
+anyhow      = { workspace = true }
+thiserror   = { workspace = true }
+uuid        = { workspace = true }
+chrono      = { workspace = true }
+hidapi      = { workspace = true }
+btleplug    = { workspace = true }

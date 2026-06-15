@@ -1,0 +1,36 @@
+[workspace]
+members = [
+  "core/puce_core",
+  "core/detection",
+  "core/mapping",
+  "core/emulation",
+  "core/ai_engine",
+  "core/virtual_controller",
+  "core/plugin_system",
+  "core/database",
+  "core/security",
+]
+resolver = "2"
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+log = "0.4"
+env_logger = "0.11"
+anyhow = "1"
+thiserror = "1"
+uuid = { version = "1", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+# bundled = true: SQLite compiled into the binary. No system library needed.
+rusqlite = { version = "0.31", features = ["bundled"] }
+# hidapi with native backend (libusb-based, works on all CI platforms).
+hidapi = { version = "2", default-features = false, features = ["linux-native"] }
+# btleplug 0.12 with tokio runtime. On Linux, this uses BlueZ over D-Bus.
+# The workflow installs libdbus-1-dev before building.
+btleplug = "0.12"
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+rand = "0.8"
+sha2 = "0.10"
+hex = "0.4"
+libloading = "0.8"

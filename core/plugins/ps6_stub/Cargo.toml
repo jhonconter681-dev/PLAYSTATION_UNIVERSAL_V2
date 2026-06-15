@@ -1,0 +1,11 @@
+[package]
+name = "ps6_stub"
+version = "0.1.0"
+edition = "2021"
+description = "Example PUCE plugin demonstrating future hardware support"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# No dependencies required, uses raw FFI

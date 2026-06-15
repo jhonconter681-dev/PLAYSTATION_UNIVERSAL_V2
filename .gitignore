@@ -1,0 +1,85 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Rust build artifacts
+/target/
+**/target/
+Cargo.lock
+!Cargo.lock
+
+# Flutter build artifacts
+UI/.dart_tool/
+UI/.flutter-plugins
+UI/.flutter-plugins-dependencies
+UI/.packages
+UI/build/
+UI/.pub-cache/
+UI/.pub/
+UI/pubspec.lock
+
+# Generated C bindings
+**/puce_core.h
+
+# Database files (runtime)
+*.db-shm
+*.db-wal
+*.db-journal
+
+# OS-specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Secrets and keys
+*.pem
+*.key
+private_keys/
+.env
+.env.*
+!.env.example
+
+# Build outputs
+dist/
+*.exe
+*.dmg
+*.AppImage
+*.apk
+*.deb
+*.rpm
+*.msi
+
+# Plugin compiled files
+*.puce_plugin
+*.so
+*.dylib
+*.dll
+
+# Temp files
+tmp/
+temp/
+*.tmp
+
+# Coverage
+coverage/
+lcov.info
+
+# Node (for tooling)
+node_modules/
