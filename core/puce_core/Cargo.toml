@@ -3,7 +3,7 @@ name = "puce_core"
 version = "0.1.0"
 edition = "2021"
 authors = ["PUCE Contributors"]
-description = "PlayStation Universal Controller Emulator — core FFI library"
+description = "PlayStation Universal Controller Emulator — core FFI library (Windows)"
 license = "MIT"
 
 [lib]
@@ -12,14 +12,14 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 # Sibling workspace crates
-detection      = { path = "../detection" }
-mapping        = { path = "../mapping" }
-emulation      = { path = "../emulation" }
-ai_engine      = { path = "../ai_engine" }
+detection          = { path = "../detection" }
+mapping            = { path = "../mapping" }
+emulation          = { path = "../emulation" }
+ai_engine          = { path = "../ai_engine" }
 virtual_controller = { path = "../virtual_controller" }
-plugin_system  = { path = "../plugin_system" }
-database       = { path = "../database" }
-security       = { path = "../security" }
+plugin_system      = { path = "../plugin_system" }
+database           = { path = "../database" }
+security           = { path = "../security" }
 
 # Workspace-level dependencies
 serde       = { workspace = true }
@@ -32,5 +32,5 @@ thiserror   = { workspace = true }
 uuid        = { workspace = true }
 chrono      = { workspace = true }
 
-[build-dependencies]
-cbindgen = "0.26"
+# cbindgen se ejecuta manualmente para generar puce_core.h — no como build script.
+# Se eliminó [build-dependencies] para evitar que cbindgen falle en CI de GitHub Actions.

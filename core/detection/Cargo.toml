@@ -3,7 +3,7 @@ name = "detection"
 version = "0.1.0"
 edition = "2021"
 authors = ["PUCE Contributors"]
-description = "HID and Bluetooth device detection engine for PUCE"
+description = "HID device detection engine for PUCE (Windows)"
 license = "MIT"
 
 [lib]
@@ -19,5 +19,5 @@ anyhow      = { workspace = true }
 thiserror   = { workspace = true }
 uuid        = { workspace = true }
 chrono      = { workspace = true }
+# hidapi con backend nativo de Windows (SetupAPI/WinUSB) — sin gcc ni libudev.
 hidapi      = { workspace = true }
-btleplug    = { workspace = true }

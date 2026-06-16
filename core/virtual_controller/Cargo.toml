@@ -2,15 +2,16 @@
 name = "virtual_controller"
 version = "0.1.0"
 edition = "2021"
-description = "Platform-specific virtual PlayStation controller creation for PUCE"
+description = "Windows ViGEm virtual PlayStation controller for PUCE"
 license = "MIT"
 
 [dependencies]
-log = { workspace = true }
+log       = { workspace = true }
 thiserror = { workspace = true }
-anyhow = { workspace = true }
+anyhow    = { workspace = true }
 emulation = { path = "../emulation" }
 
+# Windows WinAPI — requerido para comunicación con el pipe de ViGEmBus
 [target.'cfg(target_os = "windows")'.dependencies]
 windows-sys = { version = "0.52", features = [
     "Win32_Foundation",
@@ -19,6 +20,3 @@ windows-sys = { version = "0.52", features = [
     "Win32_System_Threading",
     "Win32_Devices_HumanInterfaceDevice",
 ] }
-
-[target.'cfg(target_os = "linux")'.dependencies]
-nix = { version = "0.29", features = ["ioctl", "fs"] }
