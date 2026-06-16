@@ -25,7 +25,6 @@ use emulation::{EmulationEngine, PSMode};
 use mapping::MappingEngine;
 use plugin_system::PluginManager;
 use database::Database;
-use virtual_controller::create_virtual_controller;
 
 // ─── Version constants ───────────────────────────────────────────────────────
 
@@ -101,7 +100,7 @@ pub extern "C" fn puce_init() -> c_int {
         let db_path = std::env::var("PUCE_DB_PATH")
             .unwrap_or_else(|_| "puce.db".to_string());
 
-        let database = Database::init(&db_path)
+        let database = Database::open(&db_path)
             .context("database init")?;
 
         let detection = DetectionEngine::new()
